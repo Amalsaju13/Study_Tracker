@@ -1,0 +1,160 @@
+{% extends "tracker/base.html" %}
+
+{% block content %}
+
+
+<html>
+<head>
+    <title>Study Calendar</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f4f7fb;
+        }
+
+        .calendar-card {
+            border-radius: 15px;
+        }
+
+        .calendar-table td {
+            height: 110px;
+            vertical-align: top;
+            background: #ffffff;
+            transition: 0.2s;
+        }
+
+        .calendar-table td:hover {
+            background: #eef5ff;
+        }
+
+        .day-number {
+            font-weight: 600;
+            color: #444;
+        }
+
+        .calendar-header {
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+
+
+    <div class="text-center">
+
+        <a href="/add/" class="btn btn-primary">
+            + Add Study Entry
+        </a>
+        </div>
+
+
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <a href="/?month={{ prev_month }}&year={{ prev_year }}" class="btn btn-outline-dark">
+            ← Previous
+        </a>
+
+        <h2 class="calendar-header">📅 Study Calendar {{ month }}/{{ year }}</h2>
+
+        <a href="/?month={{ next_month }}&year={{ next_year }}" class="btn btn-outline-dark">
+            Next →
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm calendar-card">
+
+        <div class="card-body">
+
+            <table class="table table-bordered text-center align-middle calendar-table">
+
+                <thead class="table-light">
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for week in calendar %}
+                <tr>
+
+                    {% for day in week %}
+
+                    <td>
+
+
+{% if day %}
+    <div class="day-number">{{ day }}</div>
+
+    {% for e in entries %}
+        {% if e.study_date.day == day %}
+
+            {% if e.progress >= 70 %}
+                <div class="mt-2 p-1 bg-success text-white rounded">
+                    <a href="/entry/{{ e.id }}/" class="text-white text-decoration-none">
+                        {{ e.topic }} ({{ e.progress }}%)
+                    </a>
+                </div>
+
+            {% elif e.progress >= 40 %}
+                <div class="mt-2 p-1 bg-warning text-dark rounded">
+                    <a href="/entry/{{ e.id }}/" class="text-dark text-decoration-none">
+                        {{ e.topic }} ({{ e.progress }}%)
+                    </a>
+                </div>
+
+            {% else %}
+                <div class="mt-2 p-1 bg-danger text-white rounded">
+                    <a href="/entry/{{ e.id }}/" class="text-white text-decoration-none">
+                        {{ e.topic }} ({{ e.progress }}%)
+                    </a>
+                </div>
+            {% endif %}
+
+        {% endif %}
+    {% endfor %}
+{% endif %}  
+
+
+
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+{% endblock %}

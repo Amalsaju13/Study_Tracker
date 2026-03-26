@@ -1,0 +1,23 @@
+{% extends "tracker/base.html" %}
+
+{% block content %}
+
+<h2>Edit Study Entry</h2>
+
+<form method="POST" class="mb-4">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">
+        Update Entry
+    </button>
+
+    <a href="/" class="btn btn-secondary ">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}
