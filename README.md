@@ -515,8 +515,7 @@ This project demonstrates:
 
 Computer Science Graduate | Python Django Developer
 
-GitHub: https://github.com/yourusername
-
+GitHub: https://github.com/Amalsaju13/Study_Tracker
 ---
 
 ## 📄 License
